@@ -8,3 +8,5 @@ RUN apt-get update -y && \
     ruby ruby-dev git
 
 RUN gem install --no-ri --no-rdoc bundler
+
+CMD ["/bin/bash"]
