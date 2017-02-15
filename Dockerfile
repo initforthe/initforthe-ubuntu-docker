@@ -9,4 +9,6 @@ RUN apt-get update -y && \
 
 RUN gem install --no-ri --no-rdoc bundler
 
+ENV QT_QPA_PLATFORM=offscreen
+
 CMD ["/bin/bash"]
