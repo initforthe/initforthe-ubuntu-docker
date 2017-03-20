@@ -1,10 +1,10 @@
 FROM ubuntu:16.04
 
-RUN apt-get update -y && \
+RUN apt-get update -y && apt-get -y dist-upgrade && \
   apt-get install -y nodejs imagemagick \
     libmagickwand-dev qt5-default libqt5webkit5-dev \
     gstreamer1.0-plugins-base gstreamer1.0-tools \
-    gstreamer1.0-x qt5-qmake xvfb git \
+    gstreamer1.0-x qt5-qmake xvfb git wget \
     ruby ruby-dev git libpq-dev openssh-client \
     libxslt1-dev libxml2-dev
 
