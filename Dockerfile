@@ -14,6 +14,4 @@ RUN wget "https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-
   tar -xjf "phantomjs-2.1.1-linux-$(arch).tar.bz2" -C /usr/local && \
   ln -s "/usr/local/phantomjs-2.1.1-linux-$(arch)/bin/phantomjs" /usr/local/bin
 
-ENV QT_QPA_PLATFORM=offscreen
-
 CMD ["/bin/bash"]
