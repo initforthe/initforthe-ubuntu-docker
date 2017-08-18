@@ -6,7 +6,12 @@ RUN apt-get update -y && apt-get -y dist-upgrade && \
     gstreamer1.0-plugins-base gstreamer1.0-tools \
     gstreamer1.0-x qt5-qmake xvfb git wget \
     ruby ruby-dev git libpq-dev openssh-client \
-    libxslt1-dev libxml2-dev
+    libxslt1-dev libxml2-dev apt-transport-https
+
+RUN wget -qO - https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
+  && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+
+RUN apt-get update -y && apt-get install yarn
 
 RUN gem install --no-ri --no-rdoc bundler
 
