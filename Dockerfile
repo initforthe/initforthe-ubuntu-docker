@@ -11,10 +11,14 @@ RUN wget -qO - https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
   tee /etc/apt/sources.list.d/yarn.list
 
 RUN apt update && apt -y upgrade && \
-  apt install -y nodejs imagemagick libmagickwand-dev qt5-default \
+  apt install -y nodejs imagemagick libmagickwand-dev qt5-default tzdata \
     libqt5webkit5-dev gstreamer1.0-plugins-base gstreamer1.0-tools \
     gstreamer1.0-x qt5-qmake xvfb git ruby ruby-dev git libpq-dev \
     openssh-client libxslt1-dev libxml2-dev google-chrome-stable yarn
+
+RUN wget "https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-$(arch).tar.bz2" && \
+  tar -xjf "phantomjs-2.1.1-linux-$(arch).tar.bz2" -C /usr/local && \
+  ln -s "/usr/local/phantomjs-2.1.1-linux-$(arch)/bin/phantomjs" /usr/local/bin
 
 RUN ln -sf /opt/google/chrome/chrome /usr/local/bin/chrome
 
@@ -27,9 +31,5 @@ RUN wget -N http://chromedriver.storage.googleapis.com/`wget -qO - chromedriver.
 
 # install bundler
 RUN gem install --no-ri --no-rdoc bundler
-
-RUN wget "https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-$(arch).tar.bz2" && \
-  tar -xjf "phantomjs-2.1.1-linux-$(arch).tar.bz2" -C /usr/local && \
-  ln -s "/usr/local/phantomjs-2.1.1-linux-$(arch)/bin/phantomjs" /usr/local/bin
 
 CMD ["/bin/bash"]
