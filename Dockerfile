@@ -1,18 +1,31 @@
 FROM ubuntu:16.04
 
-RUN apt-get update -y && apt-get -y dist-upgrade && \
-  apt-get install -y nodejs imagemagick \
-    libmagickwand-dev qt5-default libqt5webkit5-dev \
-    gstreamer1.0-plugins-base gstreamer1.0-tools \
-    gstreamer1.0-x qt5-qmake xvfb git wget \
-    ruby ruby-dev git libpq-dev openssh-client \
-    libxslt1-dev libxml2-dev apt-transport-https
+RUN apt update && apt -y install wget apt-transport-https
+
+RUN wget -qO - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
+  && echo "deb http://dl.google.com/linux/chrome/deb/ stable main" | \
+  tee /etc/apt/sources.list.d/google-chrome.list
 
 RUN wget -qO - https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
-  && echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list
+  && echo "deb https://dl.yarnpkg.com/debian/ stable main" | \
+  tee /etc/apt/sources.list.d/yarn.list
 
-RUN apt-get update -y && apt-get install yarn
+RUN apt update && apt -y upgrade && \
+  apt install -y nodejs imagemagick libmagickwand-dev qt5-default \
+    libqt5webkit5-dev gstreamer1.0-plugins-base gstreamer1.0-tools \
+    gstreamer1.0-x qt5-qmake xvfb git ruby ruby-dev git libpq-dev \
+    openssh-client libxslt1-dev libxml2-dev google-chrome-stable yarn
 
+RUN ln -sf /opt/google/chrome/chrome /usr/local/bin/chrome
+
+RUN wget -N http://chromedriver.storage.googleapis.com/`wget -qO - chromedriver.storage.googleapis.com/LATEST_RELEASE`/chromedriver_linux64.zip -P ~/ \
+  && unzip ~/chromedriver_linux64.zip -d ~/ \
+  && rm ~/chromedriver_linux64.zip \
+  && mv -f ~/chromedriver /usr/local/bin/chromedriver \
+  && chown root:root /usr/local/bin/chromedriver \
+  && chmod 0755 /usr/local/bin/chromedriver
+
+# install bundler
 RUN gem install --no-ri --no-rdoc bundler
 
 RUN wget "https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-$(arch).tar.bz2" && \
