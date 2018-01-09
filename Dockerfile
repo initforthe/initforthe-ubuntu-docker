@@ -37,6 +37,7 @@ RUN echo 'en_GB.UTF-8 UTF-8' >> /etc/locale.gen
 RUN locale-gen
 ENV LANG en_GB.UTF-8
 ENV LC_ALL en_GB.UTF-8
+ENV LANGUAGE en_GB
 
 # install bundler
 RUN gem install --no-ri --no-rdoc bundler
