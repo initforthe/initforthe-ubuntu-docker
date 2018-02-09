@@ -16,7 +16,7 @@ RUN apt update && apt -y upgrade && \
   apt install -y nodejs imagemagick libmagickwand-dev qt5-default tzdata \
     libqt5webkit5-dev gstreamer1.0-plugins-base gstreamer1.0-tools \
     gstreamer1.0-x qt5-qmake xvfb git ruby ruby-dev git libpq-dev \
-    openssh-client libxslt1-dev libxml2-dev yarn locales
+    openssh-client libxslt1-dev libxml2-dev yarn locales libffi-dev
 
 # SET en_GB locale
 RUN echo 'LC_ALL=en_GB.UTF-8\nLANG=en_GB.UTF-8' >> /etc/default/locale
