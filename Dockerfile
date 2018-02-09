@@ -28,10 +28,6 @@ ENV LANGUAGE en_GB
 
 RUN apt install -y google-chrome-stable
 
-RUN wget "https://bitbucket.org/ariya/phantomjs/downloads/phantomjs-2.1.1-linux-$(arch).tar.bz2" && \
-  tar -xjf "phantomjs-2.1.1-linux-$(arch).tar.bz2" -C /usr/local && \
-  ln -s "/usr/local/phantomjs-2.1.1-linux-$(arch)/bin/phantomjs" /usr/local/bin
-
 RUN ln -sf /opt/google/chrome/chrome /usr/local/bin/chrome
 
 RUN wget -N http://chromedriver.storage.googleapis.com/`wget -qO - chromedriver.storage.googleapis.com/LATEST_RELEASE`/chromedriver_linux64.zip -P ~/ \
