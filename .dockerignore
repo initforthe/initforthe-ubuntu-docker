@@ -1,0 +1,8 @@
+/var/log
+/var/tmp
+/var/cache
+/var/lib/apt
+/var/lib/dpkg
+/usr/share/zsh
+/usr/share/doc
+/usr/share/man

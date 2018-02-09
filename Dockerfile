@@ -1,6 +1,6 @@
 FROM ubuntu:16.04
 
-RUN apt update && apt -y install wget apt-transport-https
+RUN apt update && apt -y install wget apt-transport-https && apt clean
 
 RUN wget -qO - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
   && echo "deb http://dl.google.com/linux/chrome/deb/ stable main" | \
@@ -13,22 +13,20 @@ RUN wget -qO - https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
 RUN wget -q -O - https://deb.nodesource.com/setup_8.x | bash
 
 RUN apt update && apt -y upgrade && \
-  apt install -y nodejs imagemagick libmagickwand-dev qt5-default tzdata \
-    libqt5webkit5-dev gstreamer1.0-plugins-base gstreamer1.0-tools \
-    gstreamer1.0-x qt5-qmake xvfb git ruby ruby-dev git libpq-dev \
-    openssh-client libxslt1-dev libxml2-dev yarn locales libffi-dev
+  apt install -y nodejs imagemagick libmagickwand-dev tzdata \
+    git ruby ruby-dev libpq-dev \
+    openssh-client libxslt1-dev libxml2-dev yarn locales libffi-dev && \
+    apt clean && apt autoremove
 
 # SET en_GB locale
-RUN echo 'LC_ALL=en_GB.UTF-8\nLANG=en_GB.UTF-8' >> /etc/default/locale
-RUN echo 'en_GB.UTF-8 UTF-8' >> /etc/locale.gen
-RUN locale-gen
+RUN echo 'LC_ALL=en_GB.UTF-8\nLANG=en_GB.UTF-8' >> /etc/default/locale && \
+  echo 'en_GB.UTF-8 UTF-8' >> /etc/locale.gen && locale-gen
 ENV LANG en_GB.UTF-8
 ENV LC_ALL en_GB.UTF-8
 ENV LANGUAGE en_GB
 
-RUN apt install -y google-chrome-stable
-
-RUN ln -sf /opt/google/chrome/chrome /usr/local/bin/chrome
+RUN apt install -y google-chrome-stable && apt clean && \
+  ln -sf /opt/google/chrome/chrome /usr/local/bin/chrome
 
 RUN wget -N http://chromedriver.storage.googleapis.com/`wget -qO - chromedriver.storage.googleapis.com/LATEST_RELEASE`/chromedriver_linux64.zip -P ~/ \
   && unzip ~/chromedriver_linux64.zip -d ~/ \
