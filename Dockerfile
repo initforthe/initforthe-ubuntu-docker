@@ -1,6 +1,6 @@
-FROM ubuntu:16.04
+FROM ubuntu:18.04
 
-RUN apt update && apt -y install wget apt-transport-https && apt clean
+RUN apt update && apt -y install wget apt-transport-https gnupg2 && apt clean
 
 RUN wget -qO - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
   && echo "deb http://dl.google.com/linux/chrome/deb/ stable main" | \
@@ -13,7 +13,11 @@ RUN wget -qO - https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
 RUN wget -q -O - https://deb.nodesource.com/setup_8.x | bash
 
 RUN apt update && apt -y upgrade && \
-  apt install -y nodejs imagemagick libmagickwand-dev tzdata \
+  export DEBIAN_FRONTEND=noninteractive && \
+  apt install -y tzdata && \
+  ln -fs /usr/share/zoneinfo/Europe/London /etc/localtime && \
+  dpkg-reconfigure --frontend noninteractive tzdata && \
+  apt install -y nodejs imagemagick libmagickwand-dev \
     git ruby ruby-dev libpq-dev \
     openssh-client libxslt1-dev libxml2-dev yarn locales libffi-dev && \
     apt clean && apt autoremove
