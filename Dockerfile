@@ -6,13 +6,13 @@ RUN apt-get update && \
   apt-get -y install wget apt-transport-https gnupg2 && \
   apt-get clean
 
+RUN wget -q -O - https://deb.nodesource.com/setup_8.x | bash && \
+  apt-get install -y nodejs
+
 RUN wget -qO - https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - && \
   echo "deb https://dl.yarnpkg.com/debian/ stable main" | \
     tee /etc/apt/sources.list.d/yarn.list && \
-  apt-get install -y yarn
-
-RUN wget -q -O - https://deb.nodesource.com/setup_8.x | bash && \
-  apt-get install -y nodejs
+  apt-get update && apt-get install -y yarn
 
 RUN DEBIAN_FRONTEND=noninteractive \
   apt-get install -y tzdata && \
