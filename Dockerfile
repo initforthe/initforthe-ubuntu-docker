@@ -14,7 +14,8 @@ RUN wget -qO - https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - \
 RUN wget -q -O - https://deb.nodesource.com/setup_8.x | bash && \
   rm -rf /var/lib/apt/lists/*
 
-RUN apt update && apt -y upgrade && \
+RUN wget -qO - https://raw.githubusercontent.com/yarnpkg/releases/gh-pages/debian/pubkey.gpg | apt-key add - && \
+  apt update && apt -y upgrade && \
   apt install -y nodejs imagemagick libmagickwand-dev tzdata \
     git ruby ruby-dev libpq-dev \
     openssh-client libxslt1-dev libxml2-dev yarn locales libffi-dev && \
