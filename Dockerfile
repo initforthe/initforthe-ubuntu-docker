@@ -51,6 +51,6 @@ RUN wget -N http://chromedriver.storage.googleapis.com/`wget -qO - \
   && chmod 0755 /usr/local/bin/chromedriver
 
 # install bundler
-RUN gem install --no-ri --no-rdoc bundler
+RUN gem install --no-ri --no-rdoc bundler -v1.17.3
 
 CMD ["/bin/bash"]
